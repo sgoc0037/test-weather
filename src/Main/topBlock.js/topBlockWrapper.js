@@ -13,12 +13,23 @@ const TopBlockWrapper = (props) => {
         props.acceptSetForecast()
     }, [])
 
-    const getWeekDay = (num = 0) => {
+    const getWeekDay = (num) => {
+        if (!num) {
+            return '';
+        }
+        let options = { weekday: 'long' };
+        let date = new Date(num);
 
-        let date = new Date();
-        const days = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
-
-        return days[date.getDay()+num];
+        return new Intl.DateTimeFormat('ru-RU', options).format(date)
+    }
+    const getDateForecast = (num) => {
+        debugger
+        if (!num) {
+            return '';
+        }
+        let options = { month: 'long' }
+        let date = new Date(num)
+        return new Intl.DateTimeFormat('ru-RU', options).format(date)
     }
 
     let windPerSecond = (num) => (num / 60).toFixed(1);
@@ -38,11 +49,13 @@ const TopBlockWrapper = (props) => {
                         windPerSecond={windPerSecond(props.current.wind_kph)}
                     />
                     <BottomBlock>
-                    <h2>прогноз на 10 дней</h2>
+                        <h2>прогноз на 10 дней</h2>
                         {
                             props.forecast.map(item => {
+
                                 return <WeatherCard
-                                    
+                                    day={getWeekDay(item.date)}
+                                    month={getDateForecast(item.date)}
                                 />
                             })
                         }

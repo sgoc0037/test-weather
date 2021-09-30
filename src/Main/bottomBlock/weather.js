@@ -4,7 +4,7 @@ import style from './weatherCard.module.css';
 const WeatherCard = (props)=> {
     return <div className={style.weatherCard}>
         <h3>{props.day}</h3>
-        <span></span>
+        <span>{props.month}</span>
         <imr/>
         <span></span>
         <span></span>
