@@ -1,3 +1,20 @@
 .weatherCard {
-    
+    display: inline-flex;
+    min-height: 210px;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 25px;
+}
+.lightGray {
+    color: #000;
+    opacity: 0.4;
+}
+.midValue {
+    font-size: 20px;
+}
+.changePosition {
+    width: 100%;
+    text-align: left;
+    text-transform: capitalize;
 }

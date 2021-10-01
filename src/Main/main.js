@@ -1,12 +1,11 @@
 import React from 'react'
-import BottomBlock from './bottomBlock/bottomBlock';
 import TopBlockWrapper from './topBlock.js/topBlockWrapper';
+import style from './main.module.css';
 
 const Main = (props) => {
-    return <>
+    return <div className={style.main}>
         <TopBlockWrapper />
-        <BottomBlock />
-    </>
+    </div>
 }
 
 export default Main;

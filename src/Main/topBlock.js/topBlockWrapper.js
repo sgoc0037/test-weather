@@ -4,7 +4,7 @@ import BottomBlock from '../bottomBlock/bottomBlock';
 import { connect } from 'react-redux';
 import { acceptSetCity, acceptSetForecast } from '../../other/weatherReducer';
 import Preloader from '../../Common/Preloader/Preloader.js';
-import WeatherCard from '../bottomBlock/weather';
+import WeatherCard from '../bottomBlock/weatherCard';
 
 const TopBlockWrapper = (props) => {
 
@@ -13,23 +13,25 @@ const TopBlockWrapper = (props) => {
         props.acceptSetForecast()
     }, [])
 
-    const getWeekDay = (num) => {
-        if (!num) {
-            return '';
-        }
-        let options = { weekday: 'long' };
-        let date = new Date(num);
+    // const [editMode,setEditMode] = React.useState(false);
 
-        return new Intl.DateTimeFormat('ru-RU', options).format(date)
+    const getForecastDay = (num) => {
+
+        let date = !num ? new Date() : new Date(num);
+        let options = {
+            weekday: 'short',
+            month: 'long',
+            day: 'numeric'
+        };
+
+        return new Intl.DateTimeFormat('ru-RU', options).format(date).split(',')
     }
-    const getDateForecast = (num) => {
-        debugger
-        if (!num) {
-            return '';
+    const getDay = () => {
+
+        let options = {
+            weekday: 'long'
         }
-        let options = { month: 'long' }
-        let date = new Date(num)
-        return new Intl.DateTimeFormat('ru-RU', options).format(date)
+        return new Intl.DateTimeFormat('ru-RU', options).format(new Date())
     }
 
     let windPerSecond = (num) => (num / 60).toFixed(1);
@@ -41,21 +43,26 @@ const TopBlockWrapper = (props) => {
                     <TopBlock
                         city={props.location.name}
                         condition={props.current.condition.text}
-                        day={getWeekDay()}
+                        day={getDay()}
                         temp={props.current.temp_c}
                         icon={props.current.condition.icon}
                         chanceOf={props.chanceOf.rain}
                         humidity={props.current.humidity}
                         windPerSecond={windPerSecond(props.current.wind_kph)}
+                        // editMode={editMode}
+                        // setEditMode={setEditMode}
                     />
                     <BottomBlock>
-                        <h2>прогноз на 10 дней</h2>
                         {
                             props.forecast.map(item => {
 
                                 return <WeatherCard
-                                    day={getWeekDay(item.date)}
-                                    month={getDateForecast(item.date)}
+                                    key={item.date_epoch}
+                                    date={getForecastDay(item.date)}
+                                    condition={item.day.condition.text}
+                                    icon={item.day.condition.icon}
+                                    minTemp={item.day.mintemp_c}
+                                    maxTemp={item.day.maxtemp_c}
                                 />
                             })
                         }
