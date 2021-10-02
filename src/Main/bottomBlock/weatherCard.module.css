@@ -1,5 +1,6 @@
 .weatherCard {
     display: inline-flex;
+    max-width: 10%;
     min-height: 210px;
     flex-direction: column;
     justify-content: space-around;
