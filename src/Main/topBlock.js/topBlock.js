@@ -1,5 +1,6 @@
 import React from 'react';
 import style from './topBlock.module.css';
+import { getTemp } from '../../Common/Addition/AdditonFunction';
 
 const topBlock = (props) => {
 
@@ -8,19 +9,9 @@ const topBlock = (props) => {
             <h2>Тольятти</h2>
             <span>{props.day}</span>
             <span>{props.condition}</span>
-            {/* {
-                props.editMode &&
-                <form className={style.changeCity}>
-                    <input />
-                </form>
-            }
-            {
-                !props.editMode &&
-                <button onClick={() => props.setEditMode(!props.editMode)}>Выбрать город</button>
-            } */}
         </div>
         <div className={style.additionalInfo}>
-            <span className={style.temp}>+{props.temp}</span>
+            <span className={style.temp}>{getTemp(props.temp)}</span>
             <img src={props.icon} alt='icon' />
             <div className={style.info}>
                 <span>Вероятность осадков: <b>{props.chanceOf}%</b></span>
